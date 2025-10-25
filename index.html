@@ -89,9 +89,16 @@
         
         .date {
             font-size: 1.7rem;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             color: #2c3e50;
             font-weight: 400;
+        }
+        
+        .age {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #27ae60;
+            font-weight: 500;
         }
         
         .location {
@@ -131,6 +138,10 @@
                 font-size: 1.4rem;
             }
             
+            .age {
+                font-size: 1.2rem;
+            }
+            
             .location {
                 font-size: 1.3rem;
             }
@@ -148,6 +159,10 @@
             
             .date {
                 font-size: 1.2rem;
+            }
+            
+            .age {
+                font-size: 1.1rem;
             }
             
             .location {
@@ -169,6 +184,7 @@
             <span id="ampm" class="ampm">AM</span>
         </div>
         <div class="date" id="date">Saturday, 25th October, 2025</div>
+        <div class="age" id="age">33 years, 0 months, 0 days</div>
         <div class="location" id="location">Detecting your location...</div>
         <div class="footer">Digital Clock with Location</div>
     </div>
@@ -201,6 +217,47 @@
             // Update the date display
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+            
+            // Update age
+            calculateAge();
+        }
+        
+        function calculateAge() {
+            // Your date of birth: December 21, 1991
+            const birthDate = new Date(1991, 11, 21); // Note: months are 0-indexed (11 = December)
+            const currentDate = new Date();
+            
+            let years = currentDate.getFullYear() - birthDate.getFullYear();
+            let months = currentDate.getMonth() - birthDate.getMonth();
+            let days = currentDate.getDate() - birthDate.getDate();
+            
+            // If the current day is before the birthday in the current month, 
+            // we need to adjust months and days
+            if (days < 0) {
+                // Get the last day of the previous month
+                const lastDayOfMonth = new Date(
+                    currentDate.getFullYear(), 
+                    currentDate.getMonth(), 
+                    0
+                ).getDate();
+                
+                days = lastDayOfMonth - birthDate.getDate() + currentDate.getDate();
+                months--;
+            }
+            
+            // If months is negative, adjust years and months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Format the age display
+            const yearText = years === 1 ? "year" : "years";
+            const monthText = months === 1 ? "month" : "months";
+            const dayText = days === 1 ? "day" : "days";
+            
+            document.getElementById('age').textContent = 
+                `${years} ${yearText}, ${months} ${monthText}, ${days} ${dayText}`;
         }
         
         function getLocation() {
