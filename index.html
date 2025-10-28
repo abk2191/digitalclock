@@ -1,370 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="clock.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="clock.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Digital Clock with Location</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: url('earth.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-            padding: 20px;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        
-        .clock-container {
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 24px;
-            padding: 50px 40px;
-            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            backdrop-filter: blur(2px);
-        }
-        
-        .clock-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(50, 50, 93, 0.15), 0 7px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .clock-container:active {
-            transform: translateY(2px) scale(0.995);
-            box-shadow: 0 5px 15px rgba(50, 50, 93, 0.1), 0 3px 8px rgba(0, 0, 0, 0.07);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-        }
-        
-        .time-container {
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .time {
-            font-size: 5.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            color: #2c3e50;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Arial", sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        /* background: url("earth.jpg") no-repeat center center fixed; */
+        background-size: cover;
+        color: #333;
+        padding: 20px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .clock-container {
+        background: rgba(255, 255, 255, 0.5); /* More transparent */
+        border-radius: 24px;
+        padding: 50px 40px;
+        box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
+          0 5px 15px rgba(0, 0, 0, 0.07);
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        backdrop-filter: blur(1px);
+      }
+
+      .clock-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(50, 50, 93, 0.15),
+          0 7px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .clock-container:active {
+        transform: translateY(2px) scale(0.995);
+        box-shadow: 0 5px 15px rgba(50, 50, 93, 0.1),
+          0 3px 8px rgba(0, 0, 0, 0.07);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+      }
+
+      .time-container {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .time {
+        font-size: 5.5rem;
+        font-weight: 300;
+        letter-spacing: 3px;
+        color: #2c3e50;
+      }
+
+      .seconds {
+        font-size: 5.5rem;
+        font-weight: 300;
+        color: #e74c3c;
+      }
+
+      .ampm {
+        font-size: 2.2rem;
+        margin-left: 15px;
+        color: #3498db;
+        font-weight: 500;
+      }
+
+      .date {
+        font-size: 1.7rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+        font-weight: 400;
+      }
+
+      .age {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: #27ae60;
+        font-weight: 500;
+      }
+
+      .location {
+        font-size: 1.5rem;
+        color: #3498db;
+        padding-top: 25px;
+        border-top: 1px solid rgba(236, 240, 241, 0.5);
+        font-weight: 500;
+        min-height: 30px;
+      }
+
+      .location-loading {
+        color: #7f8c8d;
+        font-style: italic;
+      }
+
+      .location-error {
+        color: #e74c3c;
+      }
+
+      .footer {
+        margin-top: 30px;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+      }
+
+      @media (max-width: 650px) {
+        .time,
         .seconds {
-            font-size: 5.5rem;
-            font-weight: 300;
-            color: #e74c3c;
+          font-size: 4rem;
         }
-        
+
         .ampm {
-            font-size: 2.2rem;
-            margin-left: 15px;
-            color: #3498db;
-            font-weight: 500;
+          font-size: 1.8rem;
         }
-        
+
         .date {
-            font-size: 1.7rem;
-            margin-bottom: 15px;
-            color: #2c3e50;
-            font-weight: 400;
+          font-size: 1.4rem;
         }
-        
+
         .age {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #27ae60;
-            font-weight: 500;
+          font-size: 1.2rem;
         }
-        
+
         .location {
-            font-size: 1.5rem;
-            color: #3498db;
-            padding-top: 25px;
-            border-top: 1px solid rgba(236, 240, 241, 0.5);
-            font-weight: 500;
-            min-height: 30px;
+          font-size: 1.3rem;
         }
-        
-        .location-loading {
-            color: #7f8c8d;
-            font-style: italic;
+      }
+
+      @media (max-width: 480px) {
+        .time,
+        .seconds {
+          font-size: 3rem;
         }
-        
-        .location-error {
-            color: #e74c3c;
+
+        .ampm {
+          font-size: 1.5rem;
+          margin-left: 10px;
         }
-        
-        .footer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: #7f8c8d;
+
+        .date {
+          font-size: 1.2rem;
         }
-        
-        @media (max-width: 650px) {
-            .time, .seconds {
-                font-size: 4rem;
-            }
-            
-            .ampm {
-                font-size: 1.8rem;
-            }
-            
-            .date {
-                font-size: 1.4rem;
-            }
-            
-            .age {
-                font-size: 1.2rem;
-            }
-            
-            .location {
-                font-size: 1.3rem;
-            }
+
+        .age {
+          font-size: 1.1rem;
         }
-        
-        @media (max-width: 480px) {
-            .time, .seconds {
-                font-size: 3rem;
-            }
-            
-            .ampm {
-                font-size: 1.5rem;
-                margin-left: 10px;
-            }
-            
-            .date {
-                font-size: 1.2rem;
-            }
-            
-            .age {
-                font-size: 1.1rem;
-            }
-            
-            .location {
-                font-size: 1.1rem;
-            }
-            
-            .clock-container {
-                padding: 40px 25px;
-            }
+
+        .location {
+          font-size: 1.1rem;
         }
+
+        .clock-container {
+          padding: 40px 25px;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="clock-container">
-        <div class="time-container">
-            <div class="time">
-                <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds" class="seconds">00</span>
-            </div>
-            <span id="ampm" class="ampm">AM</span>
+      <div class="time-container">
+        <div class="time">
+          <span id="hours">00</span>:<span id="minutes">00</span>:<span
+            id="seconds"
+            class="seconds"
+            >00</span
+          >
         </div>
-        <div class="date" id="date">Saturday, 25th October, 2025</div>
-        <div class="age" id="age">33 years, 0 months, 0 days</div>
-        <div class="location" id="location">Detecting your location...</div>
-        <div class="footer">Digital Clock with Location</div>
+        <span id="ampm" class="ampm">AM</span>
+      </div>
+      <div class="date" id="date">Saturday, 25th October, 2025</div>
+      <div class="age" id="age">33 years, 0 months, 0 days</div>
+      <div class="location" id="location">Detecting your location...</div>
+      <div class="footer">Digital Clock with Location</div>
     </div>
 
     <script>
-        function updateClock() {
-            const now = new Date();
-            
-            // Get time components
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
-            let ampm = hours >= 12 ? 'PM' : 'AM';
-            
-            // Convert to 12-hour format
-            hours = hours % 12;
-            hours = hours ? hours : 12; // 0 should be 12
-            
-            // Add leading zeros
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            
-            // Update the time display
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
-            document.getElementById('ampm').textContent = ampm;
-            
-            // Update the date display
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
-            
-            // Update age
-            calculateAge();
-        }
-        
-        function calculateAge() {
-            // Your date of birth: December 21, 1991
-            const birthDate = new Date(1991, 11, 21); // Note: months are 0-indexed (11 = December)
-            const currentDate = new Date();
-            
-            let years = currentDate.getFullYear() - birthDate.getFullYear();
-            let months = currentDate.getMonth() - birthDate.getMonth();
-            let days = currentDate.getDate() - birthDate.getDate();
-            
-            // If the current day is before the birthday in the current month, 
-            // we need to adjust months and days
-            if (days < 0) {
-                // Get the last day of the previous month
-                const lastDayOfMonth = new Date(
-                    currentDate.getFullYear(), 
-                    currentDate.getMonth(), 
-                    0
-                ).getDate();
-                
-                days = lastDayOfMonth - birthDate.getDate() + currentDate.getDate();
-                months--;
-            }
-            
-            // If months is negative, adjust years and months
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-            
-            // Format the age display
-            const yearText = years === 1 ? "year" : "years";
-            const monthText = months === 1 ? "month" : "months";
-            const dayText = days === 1 ? "day" : "days";
-            
-            document.getElementById('age').textContent = 
-                `${years} ${yearText}, ${months} ${monthText}, ${days} ${dayText}`;
-        }
-        
-        function getLocation() {
-            const locationElement = document.getElementById('location');
-            
-            // Check if geolocation is supported
-            if (!navigator.geolocation) {
-                locationElement.textContent = "Geolocation is not supported by this browser";
-                locationElement.classList.add('location-error');
-                return;
-            }
-            
-            // Request location with timeout
-            const options = {
-                enableHighAccuracy: true,
-                timeout: 10000, // 10 seconds
-                maximumAge: 60000 // Cache for 1 minute
-            };
-            
-            navigator.geolocation.getCurrentPosition(
-                // Success callback
-                function(position) {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    
-                    // Reverse geocoding to get location name
-                    reverseGeocode(latitude, longitude);
-                },
-                // Error callback
-                function(error) {
-                    let errorMessage = "Unable to retrieve your location";
-                    
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = "Location access denied. Please allow location access.";
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = "Location information unavailable.";
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = "Location request timed out.";
-                            break;
-                        case error.UNKNOWN_ERROR:
-                            errorMessage = "An unknown error occurred.";
-                            break;
-                    }
-                    
-                    locationElement.textContent = errorMessage;
-                    locationElement.classList.add('location-error');
-                },
-                options
-            );
-        }
-        
-        function reverseGeocode(latitude, longitude) {
-            const locationElement = document.getElementById('location');
-            
-            // Using OpenStreetMap Nominatim API for reverse geocoding
-            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
-            
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.address) {
-                        const address = data.address;
-                        let locationName = "";
-                        
-                        // Try to get city/town, state, and country
-                        if (address.city) {
-                            locationName = address.city;
-                        } else if (address.town) {
-                            locationName = address.town;
-                        } else if (address.village) {
-                            locationName = address.village;
-                        }
-                        
-                        if (address.state) {
-                            locationName += locationName ? `, ${address.state}` : address.state;
-                        }
-                        
-                        if (address.country && !locationName.includes(address.country)) {
-                            locationName += locationName ? `, ${address.country}` : address.country;
-                        }
-                        
-                        if (locationName) {
-                            locationElement.textContent = locationName;
-                        } else {
-                            locationElement.textContent = "Location detected, but name unavailable";
-                        }
-                    } else {
-                        locationElement.textContent = "Unable to determine location name";
-                        locationElement.classList.add('location-error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching location data:', error);
-                    locationElement.textContent = `Coordinates: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
-                    locationElement.classList.add('location-error');
-                });
-        }
-        
-        // Initialize the clock and location when page loads
-        window.onload = function() {
-            updateClock();
-            setInterval(updateClock, 1000);
-            getLocation();
+      const pictures = [
+        "aurora.jpg",
+        "earth.jpg",
+        "galaxy.jpg",
+        "galaxy2.jpg",
+        "nature1.jpg",
+        "nature2.jpg",
+        "nature3.jpg",
+        "nature4.jpg",
+        "nature5.jpg",
+      ];
+
+      const randomBackgroundImage =
+        pictures[Math.floor(Math.random() * pictures.length)];
+      //document.body.style.backgroundImage = `url("${randomBackgroundImage}")`;
+      document.body.style.backgroundImage = `url("${randomBackgroundImage}")`;
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundPosition = "center center";
+      document.body.style.backgroundAttachment = "fixed";
+      document.body.style.backgroundSize = "cover";
+
+      function updateClock() {
+        const now = new Date();
+
+        // Get time components
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        let ampm = hours >= 12 ? "PM" : "AM";
+
+        // Convert to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12; // 0 should be 12
+
+        // Add leading zeros
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        // Update the time display
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+        document.getElementById("ampm").textContent = ampm;
+
+        // Update the date display
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
         };
+        document.getElementById("date").textContent = now.toLocaleDateString(
+          "en-US",
+          options
+        );
+
+        // Update age
+        calculateAge();
+      }
+
+      function calculateAge() {
+        // Your date of birth: December 21, 1991
+        const birthDate = new Date(1991, 11, 21); // Note: months are 0-indexed (11 = December)
+        const currentDate = new Date();
+
+        let years = currentDate.getFullYear() - birthDate.getFullYear();
+        let months = currentDate.getMonth() - birthDate.getMonth();
+        let days = currentDate.getDate() - birthDate.getDate();
+
+        // If the current day is before the birthday in the current month,
+        // we need to adjust months and days
+        if (days < 0) {
+          // Get the last day of the previous month
+          const lastDayOfMonth = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            0
+          ).getDate();
+
+          days = lastDayOfMonth - birthDate.getDate() + currentDate.getDate();
+          months--;
+        }
+
+        // If months is negative, adjust years and months
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        // Format the age display
+        const yearText = years === 1 ? "year" : "years";
+        const monthText = months === 1 ? "month" : "months";
+        const dayText = days === 1 ? "day" : "days";
+
+        document.getElementById(
+          "age"
+        ).textContent = `${years} ${yearText}, ${months} ${monthText}, ${days} ${dayText}`;
+      }
+
+      function getLocation() {
+        const locationElement = document.getElementById("location");
+
+        // Check if geolocation is supported
+        if (!navigator.geolocation) {
+          locationElement.textContent =
+            "Geolocation is not supported by this browser";
+          locationElement.classList.add("location-error");
+          return;
+        }
+
+        // Request location with timeout
+        const options = {
+          enableHighAccuracy: true,
+          timeout: 10000, // 10 seconds
+          maximumAge: 60000, // Cache for 1 minute
+        };
+
+        navigator.geolocation.getCurrentPosition(
+          // Success callback
+          function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Reverse geocoding to get location name
+            reverseGeocode(latitude, longitude);
+          },
+          // Error callback
+          function (error) {
+            let errorMessage = "Unable to retrieve your location";
+
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage =
+                  "Location access denied. Please allow location access.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = "Location information unavailable.";
+                break;
+              case error.TIMEOUT:
+                errorMessage = "Location request timed out.";
+                break;
+              case error.UNKNOWN_ERROR:
+                errorMessage = "An unknown error occurred.";
+                break;
+            }
+
+            locationElement.textContent = errorMessage;
+            locationElement.classList.add("location-error");
+          },
+          options
+        );
+      }
+
+      function reverseGeocode(latitude, longitude) {
+        const locationElement = document.getElementById("location");
+
+        // Using OpenStreetMap Nominatim API for reverse geocoding
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.address) {
+              const address = data.address;
+              let locationName = "";
+
+              // Try to get city/town, state, and country
+              if (address.city) {
+                locationName = address.city;
+              } else if (address.town) {
+                locationName = address.town;
+              } else if (address.village) {
+                locationName = address.village;
+              }
+
+              if (address.state) {
+                locationName += locationName
+                  ? `, ${address.state}`
+                  : address.state;
+              }
+
+              if (address.country && !locationName.includes(address.country)) {
+                locationName += locationName
+                  ? `, ${address.country}`
+                  : address.country;
+              }
+
+              if (locationName) {
+                locationElement.textContent = locationName;
+              } else {
+                locationElement.textContent =
+                  "Location detected, but name unavailable";
+              }
+            } else {
+              locationElement.textContent = "Unable to determine location name";
+              locationElement.classList.add("location-error");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching location data:", error);
+            locationElement.textContent = `Coordinates: ${latitude.toFixed(
+              4
+            )}, ${longitude.toFixed(4)}`;
+            locationElement.classList.add("location-error");
+          });
+      }
+
+      // Initialize the clock and location when page loads
+      window.onload = function () {
+        updateClock();
+        // randomBackground();
+        setInterval(updateClock, 1000);
+        getLocation();
+      };
     </script>
-</body>
+  </body>
 </html>
